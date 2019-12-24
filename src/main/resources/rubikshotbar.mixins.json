@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "net.rubikshotbar.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "client": [
+    "PlayerInventoryMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
