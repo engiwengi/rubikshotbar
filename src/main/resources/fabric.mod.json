@@ -9,18 +9,13 @@
     "engiwengi"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "sources": "https://github.com/engiwengi/rubikshotbar"
   },
 
-  "license": "",
+  "license": "Apache-2.0",
   "icon": "assets/rubikshotbar/icon.png",
 
-  "environment": "*",
-  "entrypoints": {
-    "main": [
-    ]
-  },
+  "environment": "client",
   "mixins": [
     "rubikshotbar.mixins.json"
   ],
