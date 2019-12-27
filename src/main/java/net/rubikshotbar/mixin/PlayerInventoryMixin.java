@@ -43,32 +43,30 @@ public abstract class PlayerInventoryMixin {
                 int scrollDirection = (int) (scrollAmount / abs(scrollAmount));
                 ClientPlayerInteractionManager interactionManager = MinecraftClient.getInstance().interactionManager;
 
-                if (MinecraftClient.getInstance().options.keySprint.isPressed()) {
-                    rubikshotbar$doHorizontalScroll(interactionManager, scrollDirection);
+                if (interactionManager != null) {
+                    if (MinecraftClient.getInstance().options.keySprint.isPressed()) {
+                        rubikshotbar$doHorizontalScroll(interactionManager, scrollDirection);
+                    } else {
+                        rubikshotbar$doVerticalScroll(interactionManager, scrollDirection);
+                    }
                 } else {
-                    rubikshotbar$doVerticalScroll(interactionManager, scrollDirection);
+                    System.out.print("Scroll Hotbar failed. No Interaction Manager found!");
                 }
             }
             ci.cancel();
         }
-
     }
 
     @Environment(EnvType.CLIENT)
-    private void rubikshotbar$swapHotbar(ClientPlayerInteractionManager interactionManager, int slot) {
-        if (!main.get(slot).isEmpty()) {
-            interactionManager.clickSlot(0, slot, selectedSlot, SlotActionType.SWAP, player);
-        }
+    private void rubikshotbar$swapTo(ClientPlayerInteractionManager interactionManager, int slot, int toSlot) {
+        interactionManager.clickSlot(0, slot, toSlot, SlotActionType.SWAP, player);
     }
 
     @Environment(EnvType.CLIENT)
     private boolean rubikshotbar$hasSufficientTimePassed() {
-        if (System.nanoTime() - rubikshotbar$lastScroll > 50000000) {
-            rubikshotbar$lastScroll = System.nanoTime();
-            return true;
-        } else {
-            return false;
-        }
+        boolean enoughTimePassed = System.nanoTime() - rubikshotbar$lastScroll > 50000000;
+        if (enoughTimePassed) rubikshotbar$lastScroll = System.nanoTime();
+        return enoughTimePassed;
     }
 
     @Environment(EnvType.CLIENT)
@@ -78,24 +76,17 @@ public abstract class PlayerInventoryMixin {
         slots.add(selectedSlot + 18);
         slots.add(selectedSlot + 18 - 9 * scrollDirection);
 
-        if (interactionManager != null) {
-            for (Integer slot : slots) {
-                rubikshotbar$swapHotbar(interactionManager, slot);
+        for (Integer slot : slots) {
+            if (!main.get(slot).isEmpty()) {
+                rubikshotbar$swapTo(interactionManager, slot, selectedSlot);
             }
-        } else {
-//              Can this even happen?
-            System.out.print("Scroll Hotbar failed. No Interaction Manager found!");
         }
     }
 
     @Environment(EnvType.CLIENT)
     private void rubikshotbar$doHorizontalScroll(ClientPlayerInteractionManager interactionManager, int scrollDirection) {
-        if (interactionManager != null) {
-            for (int i = scrollDirection > 0 ? 0 : 9; i <= 9 && i >= 0; i += scrollDirection) {
-                interactionManager.clickSlot(0, 28, i, SlotActionType.SWAP, player);
-            }
-        } else {
-            System.out.print("Scroll Hotbar failed. No Interaction Manager found!");
+        for (int i = scrollDirection > 0 ? 0 : 9; i <= 9 && i >= 0; i += scrollDirection) {
+            rubikshotbar$swapTo(interactionManager, 28, i);
         }
     }
 }
