@@ -1,4 +1,4 @@
-package net.rubikshotbar;
+package net.rubikshotbar.impl;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
