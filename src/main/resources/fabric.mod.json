@@ -2,7 +2,6 @@
   "schemaVersion": 1,
   "id": "rubikshotbar",
   "version": "${version}",
-
   "name": "Rubik's Hotbar",
   "description": "Scroll through slots on your hotbar like a Rubik's Cube",
   "authors": [
@@ -11,20 +10,21 @@
   "contact": {
     "sources": "https://github.com/engiwengi/rubikshotbar"
   },
-
   "license": "Apache-2.0",
   "icon": "assets/rubikshotbar/icon.png",
-
   "environment": "client",
+  "entrypoints": {
+    "client": ["net.rubikshotbar.RubiksHotbar"],
+    "modmenu": ["net.rubikshotbar.config.RubiksHotbarModMenuCompat"]
+  },
   "mixins": [
     "rubikshotbar.mixins.json"
   ],
-
   "depends": {
-    "fabricloader": ">=0.7.2",
-    "minecraft": "1.15.x"
+    "cloth-config2": "^2.4.1",
+    "fabric-keybindings-v0": ">=0.1.1"
   },
-  "suggests": {
-    "flamingo": "*"
+  "custom": {
+    "modmenu:clientsideOnly": true
   }
 }
