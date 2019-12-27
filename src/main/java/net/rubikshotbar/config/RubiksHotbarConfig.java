@@ -12,18 +12,21 @@ public class RubiksHotbarConfig {
      * Ignore empty slots when scrolling through columns
      */
     private boolean ignoreEmpty = true;
-    private InputUtil.KeyCode singleColumn;
-    private InputUtil.KeyCode allColumn;
-    private InputUtil.KeyCode row;
+    private int singleColumn = 340;
+    private int allColumn = 342;
+    private int row = 341;
 
     static Screen createConfigScreen(Screen parent) {
         ConfigBuilder builder = ConfigBuilder.create().setParentScreen(parent).setTitle(String.format("config.%s.title", RubiksHotbar.MOD_ID));
         RubiksHotbarConfig config = RubiksHotbarConfigManager.getConfig();
         builder.getOrCreateCategory("general")
                 .addEntry(ConfigEntryBuilder.create().startBooleanToggle("Ignore Empty Slots", config.getIgnoreEmpty()).setDefaultValue(true).setSaveConsumer(b -> config.ignoreEmpty = b).build())
-                .addEntry(ConfigEntryBuilder.create().startKeyCodeField("Scroll Hotbar Vertically", config.getSingleColumn()).setAllowMouse(false).setSaveConsumer(b -> config.singleColumn = b).build())
-                .addEntry(ConfigEntryBuilder.create().startKeyCodeField("Scroll Hotbar Horizontally", config.getRow()).setAllowMouse(false).setSaveConsumer(b -> config.row = b).build())
-                .addEntry(ConfigEntryBuilder.create().startKeyCodeField("Scroll Entire Hotbar Vertically", config.getAllColumn()).setAllowMouse(false).setSaveConsumer(b -> config.allColumn = b).build());
+                .addEntry(ConfigEntryBuilder.create().startKeyCodeField("Scroll Hotbar Vertically", config.getSingleColumn()).setDefaultValue(InputUtil.fromName("key.keyboard.left.shift")).setAllowMouse(false)
+                        .setSaveConsumer(b -> config.singleColumn = b.getKeyCode()).build())
+                .addEntry(ConfigEntryBuilder.create().startKeyCodeField("Scroll Hotbar Horizontally", config.getRow()).setDefaultValue(InputUtil.fromName("key.keyboard.left.control")).setAllowMouse(false)
+                        .setSaveConsumer(b -> config.row = b.getKeyCode()).build())
+                .addEntry(ConfigEntryBuilder.create().startKeyCodeField("Scroll Entire Hotbar Vertically", config.getAllColumn()).setDefaultValue(InputUtil.fromName("key.keyboard.left.alt")).setAllowMouse(false)
+                        .setSaveConsumer(b -> config.allColumn = b.getKeyCode()).build());
         builder.setSavingRunnable(RubiksHotbarConfigManager::save);
         return builder.build();
     }
@@ -33,14 +36,14 @@ public class RubiksHotbarConfig {
     }
 
     public InputUtil.KeyCode getSingleColumn() {
-        return singleColumn;
+        return InputUtil.getKeyCode(singleColumn, 0);
     }
 
     public InputUtil.KeyCode getAllColumn() {
-        return allColumn;
+        return InputUtil.getKeyCode(allColumn, 0);
     }
 
     public InputUtil.KeyCode getRow() {
-        return row;
+        return InputUtil.getKeyCode(row, 0);
     }
 }
