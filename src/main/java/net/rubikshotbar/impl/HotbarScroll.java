@@ -18,13 +18,18 @@ public interface HotbarScroll {
         } else if (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), RubiksHotbarConfigManager.getConfig().getSingleColumn().getKeyCode())) {
             return new SingleColumnHotbarScroll(main, scrollAmount, interactionManager, player, selectedSlot);
         } else if (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), RubiksHotbarConfigManager.getConfig().getRow().getKeyCode())) {
-            return new RowHotbarScroll(main, scrollAmount, interactionManager, player);
+            return new RowHotbarScroll(scrollAmount, interactionManager, player);
         } else if (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), RubiksHotbarConfigManager.getConfig().getAllColumn().getKeyCode())) {
             return new AllColumnHotbarScroll(main, scrollAmount, interactionManager, player);
         } else {
             return null;
         }
     }
+
+    ScrollDirection getScrollDirection();
+
+    int getTargetSlot();
+
 
     enum ScrollDirection {
         UP(1),

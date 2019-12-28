@@ -21,8 +21,7 @@
     "rubikshotbar.mixins.json"
   ],
   "depends": {
-    "cloth-config2": "^2.4.1",
-    "fabric-keybindings-v0": ">=0.1.1"
+    "cloth-config2": "^2.4.1"
   },
   "custom": {
     "modmenu:clientsideOnly": true

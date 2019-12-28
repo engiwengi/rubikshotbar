@@ -26,14 +26,24 @@ public class SingleColumnHotbarScroll implements HotbarScroll {
 
     public void doScroll() {
         ArrayList<Integer> slots = new ArrayList<>();
-        slots.add(selectedSlot + 18 + 9 * scrollDirection.getValue());
-        slots.add(selectedSlot + 18);
-        slots.add(selectedSlot + 18 - 9 * scrollDirection.getValue());
+        slots.add(getTargetSlot() + 18 + 9 * getScrollDirection().getValue());
+        slots.add(getTargetSlot() + 18);
+        slots.add(getTargetSlot() + 18 - 9 * getScrollDirection().getValue());
 
         for (Integer slot : slots) {
             if (!main.get(slot).isEmpty() || !RubiksHotbarConfigManager.getConfig().getIgnoreEmpty()) {
-                interactionManager.clickSlot(0, slot, selectedSlot, SlotActionType.SWAP, player);
+                interactionManager.clickSlot(0, slot, getTargetSlot(), SlotActionType.SWAP, player);
             }
         }
+    }
+
+    @Override
+    public ScrollDirection getScrollDirection() {
+        return scrollDirection;
+    }
+
+    @Override
+    public int getTargetSlot() {
+        return selectedSlot;
     }
 }

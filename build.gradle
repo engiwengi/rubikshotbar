@@ -24,7 +24,7 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 //  Fabric API
-    modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+//    modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 //  Cloth Config
     modImplementation "me.shedaniel.cloth:config-2:${project.clothconfig_version}"
