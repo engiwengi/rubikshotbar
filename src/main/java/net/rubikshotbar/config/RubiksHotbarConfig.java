@@ -36,14 +36,14 @@ public class RubiksHotbarConfig {
     }
 
     public InputUtil.KeyCode getSingleColumn() {
-        return InputUtil.getKeyCode(singleColumn, 0);
+        return singleColumn != -1 ? InputUtil.getKeyCode(singleColumn, 0) : InputUtil.UNKNOWN_KEYCODE;
     }
 
     public InputUtil.KeyCode getAllColumn() {
-        return InputUtil.getKeyCode(allColumn, 0);
+        return allColumn != -1 ? InputUtil.getKeyCode(allColumn, 0) : InputUtil.UNKNOWN_KEYCODE;
     }
 
     public InputUtil.KeyCode getRow() {
-        return InputUtil.getKeyCode(row, 0);
+        return row != -1 ? InputUtil.getKeyCode(row, 0) : InputUtil.UNKNOWN_KEYCODE;
     }
 }

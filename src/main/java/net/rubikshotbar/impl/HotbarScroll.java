@@ -12,14 +12,19 @@ public interface HotbarScroll {
     void doScroll();
 
     static HotbarScroll getInstance(DefaultedList<ItemStack> main, double scrollAmount, ClientPlayerInteractionManager interactionManager, PlayerEntity player, int selectedSlot) {
+        long handle = MinecraftClient.getInstance().getWindow().getHandle();
+        int singleColumn = RubiksHotbarConfigManager.getConfig().getSingleColumn().getKeyCode();
+        int allColumn = RubiksHotbarConfigManager.getConfig().getAllColumn().getKeyCode();
+        int row = RubiksHotbarConfigManager.getConfig().getRow().getKeyCode();
+
         if (interactionManager == null) {
             System.out.print("Scroll Hotbar failed. No Interaction Manager found!");
             return null;
-        } else if (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), RubiksHotbarConfigManager.getConfig().getSingleColumn().getKeyCode())) {
+        } else if (singleColumn != -1 && InputUtil.isKeyPressed(handle, singleColumn)) {
             return new SingleColumnHotbarScroll(main, scrollAmount, interactionManager, player, selectedSlot);
-        } else if (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), RubiksHotbarConfigManager.getConfig().getRow().getKeyCode())) {
+        } else if (row != -1 && InputUtil.isKeyPressed(handle, row)) {
             return new RowHotbarScroll(scrollAmount, interactionManager, player);
-        } else if (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), RubiksHotbarConfigManager.getConfig().getAllColumn().getKeyCode())) {
+        } else if (allColumn != -1 && InputUtil.isKeyPressed(handle, allColumn)) {
             return new AllColumnHotbarScroll(main, scrollAmount, interactionManager, player);
         } else {
             return null;
@@ -29,7 +34,6 @@ public interface HotbarScroll {
     ScrollDirection getScrollDirection();
 
     int getTargetSlot();
-
 
     enum ScrollDirection {
         UP(1),
